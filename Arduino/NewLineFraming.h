@@ -5,6 +5,7 @@
 /// The `NewLineFraming` class reads and writes data, treating each line ending with `\n`
 /// as a separate message, and includes timeout support for these operations.
 class NewLineFraming : public Framing {
+    bool anyWritten = false;
 public:
     /// @brief Constructs a `NewLineFraming` object using an existing `Stream`.
     /// @param stream The base stream to which newline framing operations will be applied.
@@ -41,20 +42,24 @@ public:
     /// @return The total number of bytes written, including the newline character. Returns fewer bytes if the timeout expires.
     virtual size_t Write(const void* data, size_t size, const Timeout& timeout) override {
         size_t bytesWritten = baseStream.Write(data, size, timeout);
+
+        if(bytesWritten)
+            anyWritten = true;
+
         if (bytesWritten < size) {
             return bytesWritten; // Timeout or partial write, return immediately
         }
 
-        // Append the newline character to indicate the end of the frame
-        uint8_t newline = '\n';
-        size_t newlineWritten = baseStream.Write(&newline, 1, timeout);
-        
-        return bytesWritten + newlineWritten; // Return total bytes written including newline
+        return bytesWritten;
     }
 
     /// @brief Flushes any buffered data within the base stream, ensuring that all pending data is transmitted.
     /// @param timeout A `Timeout` object specifying the maximum time allowed for flushing.
     virtual void Flush(const Timeout& timeout) override {
+        if(anyWritten)
+        {
+            baseStream.Write("\n", 2, timeout);
+        }
         baseStream.Flush(timeout); // Delegate flush to the base stream
     }
 };

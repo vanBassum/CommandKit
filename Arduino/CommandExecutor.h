@@ -51,7 +51,7 @@ private:
     void ExecuteCommand(ObjectStream& objStream, const Timeout& timeout) {
         CommandRequest cmd;
         if (!objStream.Read(cmd, timeout)) { // Use timeout provided
-            objStream.Write(CommandResult::Error(CommandResultCodes::SerializeError), timeout); // Write with timeout
+            objStream.Write(CommandResult::Error(CommandResultCodes::SerializeError), Timeout::Milliseconds(100)); // Write with timeout
             return;
         }
 
