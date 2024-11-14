@@ -25,13 +25,7 @@ constexpr CommandLookupItem command_lookup[] = {
 SerialStream stream;
 Serializer serializer = SerializerFactory::CreateAsciiSerializer();
 StaticCommandList commandList(command_lookup, sizeof(command_lookup) / sizeof(command_lookup[0]));
-
-FramingFactory framingFactory = [](IStream &stream, std::function<void(Framing &)> callback) {
-    NewLineFraming framing(stream);
-    callback(framing);
-};
-
-CommandExecutor executor(stream, commandList, framingFactory, serializer);
+CommandExecutor executor(stream, commandList, serializer);
 
 void setup()
 {
@@ -44,5 +38,6 @@ void setup()
 
 void loop()
 {
-    executor.Tick(Timeout::Milliseconds(1000));
+    NewLineFraming framing(stream);
+    executor.Tick(framing, Timeout::Milliseconds(5000));
 }

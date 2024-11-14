@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 
 /// @brief Enum representing possible result codes for command execution.
 /// Each code indicates the success or failure status of a command, with specific

@@ -1,6 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <cstddef>
 #include "Timeout.h"
 
 /// @brief An abstract base class defining a generic data stream interface.

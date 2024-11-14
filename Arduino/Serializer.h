@@ -1,8 +1,6 @@
 #pragma once
 #include "IStream.h"
 #include "Timeout.h"
-#include <type_traits>
-#include <typeindex>
 
 template <typename T>
 int type_id()

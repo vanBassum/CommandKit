@@ -1,6 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <cstddef>
 #include "ObjectStream.h"
 #include "CommandStructures.h"
 #include "Timeout.h"

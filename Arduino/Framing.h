@@ -1,6 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <cstddef>
 #include "Timeout.h"
 #include "IStream.h"
 

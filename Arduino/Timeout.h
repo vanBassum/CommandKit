@@ -1,6 +1,5 @@
 #pragma once
 #include <Arduino.h>
-#include <cstdint>
 
 /// @brief A utility class for managing timeouts based on elapsed milliseconds.
 /// This class is designed to handle unsigned integer overflow gracefully, 
